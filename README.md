@@ -114,4 +114,3 @@ pyinstaller --noconsole --onefile --add-data "templates;templates" app.py
 
 本專案採用 [MIT License](LICENSE) 授權。歡迎自由修改與散布！
 
-```
