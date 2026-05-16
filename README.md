@@ -1,5 +1,3 @@
-# NasMounter
-```markdown
 # 🚀 NAS Mounter Pro (NAS 網路硬碟掛載工具)
 
 👉 **[點此下載最新版 EXE 執行檔](https://github.com/00086/NasMounter/releases/download/%23NasMounter/appexe.exe)**
