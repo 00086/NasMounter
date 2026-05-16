@@ -2,6 +2,8 @@
 ```markdown
 # 🚀 NAS Mounter Pro (NAS 網路硬碟掛載工具)
 
+👉 **[點此下載最新版 EXE 執行檔](https://github.com/00086/NasMounter/releases/download/%23NasMounter/appexe.exe)**
+
 ![Windows](https://img.shields.io/badge/OS-Windows-blue)
 ![Python](https://img.shields.io/badge/Python-3.8+-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -34,7 +36,7 @@
 
 ### 1. 複製專案
 ```bash
-git clone [https://github.com/你的帳號/NAS-Mounter-Pro.git](https://github.com/你的帳號/NAS-Mounter-Pro.git)
+git clone [https://github.com/00086/NAS-Mounter-Pro.git](https://github.com/00086/NAS-Mounter-Pro.git)
 cd NAS-Mounter-Pro
 
 ```
