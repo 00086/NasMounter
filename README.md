@@ -52,10 +52,10 @@ pip install Flask pysmb pywebview
 
 ### 3. 執行程式
 
-請確保 `app.py` 與 `templates/index.html` 處於正確的目錄結構下，然後執行：
+請確保 `appexe.py` 與 `templates/index.html` 處於正確的目錄結構下，然後執行：
 
 ```bash
-python app.py
+python appexe.py
 
 ```
 
@@ -96,7 +96,7 @@ pip install pyinstaller
 
 2. 執行以下打包指令（請於專案根目錄執行）：
 ```bash
-pyinstaller --noconsole --onefile --add-data "templates;templates" app.py
+pyinstaller --noconsole --onefile --add-data "templates;templates" appexe.py
 
 ```
 
