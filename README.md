@@ -6,6 +6,8 @@
 ![Python](https://img.shields.io/badge/Python-3.8+-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
+![示意畫面](./images/image01.png)
+
 **NAS Mounter Pro** 是一個現代化、具備圖形介面 (GUI) 的 Windows 網路硬碟掛載工具。
 告別繁瑣的指令碼與 Windows 內建的網路磁碟機設定，本工具提供直覺、美觀的介面，讓使用者能輕鬆地連線至 NAS、列出共用資料夾，並一鍵掛載或卸載本機磁碟機。
 
