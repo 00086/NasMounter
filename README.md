@@ -49,6 +49,16 @@ cd NAS-Mounter-Pro
 pip install Flask pysmb pywebview
 
 ```
+python 3.14 如果安裝過程有異常，依照下列方式安裝
+
+```bash
+python -m pip install --upgrade pip setuptools wheel
+
+pip install --pre pythonnet
+
+pip install Flask pysmb pywebview
+
+```
 
 *(註：其餘如 `subprocess`, `socket`, `ctypes` 皆為 Python 內建標準函式庫，無需額外安裝)*
 
