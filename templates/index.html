@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css' rel='stylesheet'>
+    <style>
+        /* 基礎全螢幕鎖定 */
+        body { background-color: #f8f9fa; font-family: 'Microsoft JhengHei', sans-serif; height: 100vh; margin: 0; padding: 12px; overflow: hidden; display: flex; flex-direction: column; }
+        
+        .app-header { flex-shrink: 0; margin-bottom: 8px; }
+        
+        /* 核心 Flex 佈局 */
+        .app-main { flex-grow: 1; display: flex; flex-direction: row; gap: 12px; overflow: hidden; height: calc(100vh - 45px); }
+        
+        /* 💡 修正 1：左側欄寬度調小至 210px，釋放更多空間給右側表格 */
+        .left-panel { width: 210px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; }
+        
+        /* 右側面板自動填滿 */
+        .right-panel { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; }
+        
+        .card { border: none; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-blue { background: linear-gradient(135deg, #007bff, #0056b3); color: white; border-radius: 10px 10px 0 0; }
+        .header-green { background: linear-gradient(135deg, #28a745, #1e7e34); color: white; border-radius: 10px 10px 0 0; }
+        .header-red { background: linear-gradient(135deg, #dc3545, #bd2130); color: white; border-radius: 10px 10px 0 0; }
+        
+        .right-card { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+        .scrollable-body { overflow-y: auto; flex-grow: 1; }
+        
+        /* 表格：鎖定欄位比例，防止文字過長破壞排版 */
+        .fixed-table { table-layout: fixed; width: 100%; }
+        .fixed-table th:nth-child(1), .fixed-table td:nth-child(1) { width: 52%; }
+        .fixed-table th:nth-child(2), .fixed-table td:nth-child(2) { width: 28%; }
+        .fixed-table th:nth-child(3), .fixed-table td:nth-child(3) { width: 20%; }
+        
+        .fixed-table th { background-color: #f1f3f5; position: sticky; top: 0; z-index: 1; font-size: 13px; }
+        
+        /* 文字過長自動變 ... */
+        .text-truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+        .card-body { padding: 12px; }
+        .btn-action { border-radius: 6px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="app-header">
+        <h5 class='m-0 text-secondary fw-bold'><i class='bi bi-nas'></i> NAS 網路硬碟掛載 Pro</h5>
+    </div>
+    
+    <div class="app-main">
+        
+        <div class="left-panel">
+            <div class='card'>
+                <div class='card-header header-blue d-flex justify-content-between align-items-center px-2 py-2'>
+                    <span class='fw-bold' style='font-size:11px; white-space: nowrap;'><i class='bi bi-pc-display'></i> 1. 連線至 NAS</span>
+                    <form action="{{ url_for('logout') }}" method="POST" class="m-0">
+                        <button type="submit" class="btn btn-sm btn-light py-0 px-1 fw-bold" style='font-size:10px; white-space: nowrap;'>清除連線</button>
+                    </form>
+                </div>
+                <div class='card-body p-2'>
+                    <form action="{{ url_for('index') }}" method="POST">
+                        <div class='mb-1'>
+                            <label class='form-label small text-muted mb-0' style='font-size:11px'>NAS IP 或名稱</label>
+                            <input type='text' name='nas_ip' class='form-control form-control-sm shadow-sm' value="{{ credentials.get('ip', '') }}" required>
+                        </div>
+                        <div class='mb-1'>
+                            <label class='form-label small text-muted mb-0' style='font-size:11px'>帳號</label>
+                            <input type='text' name='username' class='form-control form-control-sm shadow-sm' value="{{ credentials.get('username', '') }}" required>
+                        </div>
+                        <div class='mb-2'>
+                            <label class='form-label small text-muted mb-0' style='font-size:11px'>密碼</label>
+                            <input type='password' name='password' class='form-control form-control-sm shadow-sm' value="{{ credentials.get('password', '') }}" required>
+                        </div>
+                        <button type="submit" class='btn btn-primary btn-sm w-100 btn-action shadow py-1' style='font-size:12px'>
+                            <i class='bi bi-list-ul'></i> 列出資料夾
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class='card flex-grow-1 d-flex flex-column justify-content-between'>
+                <div class='card-header header-red py-2 px-2'>
+                    <span class='fw-bold' style='font-size:12px'><i class='bi bi-trash'></i> 強制卸載所有連線</span>
+                </div>
+                <div class='card-body d-flex flex-column justify-content-center text-center p-2'> 
+                    <p class='text-muted mb-2' style='font-size:11px; line-height: 1.3;'>將清除本機所有<br>網路磁碟連線</p>
+                    <form action="{{ url_for('unmount_all') }}" method="POST" class="w-100">
+                        <button type="submit" class='btn btn-outline-danger btn-sm w-100 btn-action py-1' style='font-size:12px'>一鍵卸載全部</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class='card right-card'>
+                <div class='card-header header-green py-2'>
+                    <span class='fw-bold' style='font-size:13px'><i class='bi bi-folder-check'></i> 2. 選擇資料夾並掛載</span>
+                </div>
+                
+                <div class='card-body scrollable-body p-0'>
+                    <div class='p-2'>
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }} py-1 px-2 small mb-2" style="font-size:11px;">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <div class='alert alert-info py-1 px-2 small mb-2' style='font-size:11px'>
+                            <i class='bi bi-info-circle-fill'></i> 只會顯示尚未使用的磁碟代號。
+                        </div>
+                        
+                        <table class='table table-sm align-middle mb-0 fixed-table' style='font-size:12px'>
+                            <thead>
+                                <tr><th>資料夾名稱</th><th>掛載狀態</th><th class='text-end'>動作</th></tr>
+                            </thead>
+                            <tbody>
+                                {% if folders %}
+                                    {% for folder in folders %}
+                                    <tr>
+                                        <td><span class='fw-bold text-dark text-truncate' title="{{ folder }}" style="max-width: 100%;">{{ folder }}</span></td>
+                                        {% if folder in mounted_folders %}
+                                            <td><span class='badge bg-success' style='font-size: 11px;'>已掛 ({{ mounted_folders[folder] }})</span></td>
+                                            <td class='text-end'>
+                                                <form action="{{ url_for('unmount') }}" method="POST" class="m-0">
+                                                    <input type="hidden" name="drive_letter" value="{{ mounted_folders[folder] }}">
+                                                    <button type="submit" class='btn btn-sm btn-danger btn-action px-2 py-0' style='font-size:11px'>卸載</button>
+                                                </form>
+                                            </td>
+                                        {% else %}
+                                            <form action="{{ url_for('mount') }}" method="POST" class="m-0">
+                                                <input type="hidden" name="folder" value="{{ folder }}">
+                                                <td>
+                                                    <select name="drive_letter" class='form-select form-select-sm d-inline-block w-auto py-0' style='font-size:11px; height:22px;'>
+                                                        {% for drive in drive_letters %}
+                                                            <option value="{{ drive }}">{{ drive }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </td>
+                                                <td class='text-end'>
+                                                    <button type="submit" class='btn btn-sm btn-success btn-action px-2 py-0' style='font-size:11px'>掛載</button>
+                                                </td>
+                                            </form>
+                                        {% endif %}
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan='3' class='text-center text-muted py-3'>請先連線以獲取資料</td></tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
