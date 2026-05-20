@@ -1,4 +1,4 @@
-# 🚀 NAS Mounter Pro (NAS 網路硬碟掛載工具)
+# 🚀 NAS Mounter(NAS 網路硬碟掛載工具)
 
 👉 **[點此下載最新版 EXE 執行檔](https://github.com/00086/NasMounter/releases/download/%23NasMounter/appexe.exe)**
 
@@ -9,7 +9,7 @@
 ![示意畫面](./images/image01.png)
 ![示意畫面](./images/image02.png)
 
-**NAS Mounter Pro** 是一個現代化、具備圖形介面 (GUI) 的 Windows 網路硬碟掛載工具。
+**NAS Mounter** 是一個現代化、具備圖形介面 (GUI) 的 Windows 網路硬碟掛載工具。
 告別繁瑣的指令碼與 Windows 內建的網路磁碟機設定，本工具提供直覺、美觀的介面，讓使用者能輕鬆地連線至 NAS、列出共用資料夾，並一鍵掛載或卸載本機磁碟機。
 
 ## ✨ 核心特色功能
