@@ -50,7 +50,7 @@ cd NAS-Mounter-Pro
 pip install Flask pysmb pywebview
 
 ```
-python 3.14 如果安裝過程有異常，依照下列方式安裝
+python 3.14 如果安裝過程有異常，依照下列方式安裝，建議安裝 3.12 版
 
 ```bash
 python -m pip install --upgrade pip setuptools wheel
